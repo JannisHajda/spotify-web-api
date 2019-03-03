@@ -1,0 +1,15 @@
+{
+  "name": "spotify-web-api",
+  "version": "1.0.0",
+  "description": "A promise based javascript API wrapper for the spotify-web-api ",
+  "main": "index.js",
+  "repository": "https://github.com/jannishajda/spotify-web-api.git",
+  "author": "Jannis Hajda <jannis.hajda@protonmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "query-string": "^6.3.0",
+    "querystring": "^0.2.0"
+  }
+}
