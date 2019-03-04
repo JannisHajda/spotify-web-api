@@ -714,6 +714,577 @@ class SpotifyWebApi {
 
   /**
    *
+   * Tracks API
+   *
+   */
+
+  /**
+   * Get a Track
+   * Get Spotify catalog information for a single track identified by its unique Spotify ID.
+   *
+   * @param {String} id
+   * @param {String} market
+   */
+
+  async getTrack(id, market) {
+    return this.performRequest({
+      url: `/tracks/${id}`,
+      params: {
+        market
+      }
+    });
+  }
+
+  /**
+   * Get Several Tracks
+   * Get Spotify catalog information for multiple tracks based on their Spotify IDs.
+   *
+   * @param {Array} ids
+   * @param {String} market
+   */
+
+  async getTracks(ids = [], market) {
+    return this.performRequest({
+      url: "/tracks",
+      params: {
+        ids: [ids].filter(Boolean).join(","),
+        market
+      }
+    });
+  }
+
+  /**
+   * Get Audio Features for a Track
+   * Get audio feature information for a single track identified by its unique Spotify ID.
+   *
+   * @param {String} id
+   */
+
+  async getTrackAudioFeatures(id) {
+    return this.performRequest({
+      url: `/audio-features/${id}`
+    });
+  }
+
+  /**
+   * Get Audio Features for Several Tracks
+   * Get audio features for multiple tracks based on their Spotify IDs.
+   *
+   * @param {Array} ids
+   */
+
+  async getTracksAudioFeatures(ids) {
+    return this.performRequest({
+      url: "/audio-features",
+      params: {
+        ids: [ids].filter(Boolean).join(",")
+      }
+    });
+  }
+
+  /**
+   * Get Audio Analysis for a Track
+   * Get a detailed audio analysis for a single track identified by its unique Spotify ID.
+   *
+   * @param {String} id
+   */
+
+  async getTrackAudioAnalysis(id) {
+    return this.performRequest({
+      url: `/audio-analysis/${id}`
+    });
+  }
+
+  /**
+   *
+   * Albums API
+   *
+   */
+
+  /**
+   * Get Multiple Albums
+   * Get Spotify catalog information for multiple albums identified by their Spotify IDs.
+   *
+   * @param {Array} ids
+   * @param {String} market
+   */
+
+  async getAlbums(ids, market) {
+    return this.performRequest({
+      url: "/albums",
+      params: {
+        ids: [ids].filter(Boolean).join(","),
+        market
+      }
+    });
+  }
+
+  /**
+   * Get an Album
+   * Get Spotify catalog information for a single album.
+   *
+   * @param {String} id
+   * @param {String} market
+   */
+
+  async getAlbum(id, market) {
+    return this.performRequest({
+      url: `/albums/${id}`,
+      params: {
+        market
+      }
+    });
+  }
+
+  /**
+   *
+   * @param {String} id
+   * @param {Integer} limit
+   * @param {Integer} offset
+   * @param {String} market
+   */
+
+  async getAlbumTracks(id, limit = 20, offset = 0, market) {
+    return this.performRequest({
+      url: `/albums/${id}/tracks`,
+      params: {
+        limit,
+        offset,
+        market
+      }
+    });
+  }
+
+  /**
+   *
+   * Library API
+   *
+   */
+
+  /**
+   * Check User's Saved Albums
+   * Check if one or more albums is already saved in the current Spotify user’s ‘Your Music’ library.
+   *
+   * @param {Array} ids
+   */
+
+  async checkSavedAlbums(ids) {
+    return this.performRequest({
+      url: "/me/albums/contains",
+      params: {
+        ids: [ids].filter(Boolean).join(",")
+      }
+    });
+  }
+
+  /**
+   * Save Albums for Current User
+   * Save one or more albums to the current user’s ‘Your Music’ library.
+   *
+   * @param {Array} ids
+   */
+
+  async saveAlbums(ids) {
+    return this.performRequest({
+      url: "/me/albums",
+      method: "PUT",
+      params: {
+        ids: [ids].filter(Boolean).join(",")
+      },
+      data: {
+        ids
+      }
+    });
+  }
+
+  /**
+   * Remove Albums for Current User
+   * Remove one or more albums from the current user’s ‘Your Music’ library.
+   *
+   * @param {Array} ids
+   */
+
+  async removeSavedAlbums(ids) {
+    return this.performRequest({
+      url: "/me/albums",
+      method: "DELETE",
+      params: {
+        ids: [ids].filter(Boolean).join(",")
+      },
+      data: {
+        ids
+      }
+    });
+  }
+
+  /**
+   * Remove User's Saved Tracks
+   * Remove one or more tracks from the current user’s ‘Your Music’ library.
+   *
+   * @param {Array} ids
+   */
+
+  async removeSavedTracks(ids) {
+    return this.performRequest({
+      url: "/me/tracks",
+      method: "DELETE",
+      params: {
+        ids: [ids].filter(Boolean).join(",")
+      }
+    });
+  }
+
+  /**
+   * Save Tracks for User
+   * Save one or more tracks to the current user’s ‘Your Music’ library.
+   *
+   * @param {Array} ids
+   */
+
+  async saveTracks(ids) {
+    return this.performRequest({
+      url: "/me/tracks",
+      method: "PUT",
+      params: {
+        ids: [ids].filter(Boolean).join(",")
+      }
+    });
+  }
+
+  /**
+   * Check User's Saved Tracks
+   * Check if one or more tracks is already saved in the current Spotify user’s ‘Your Music’ library.
+   *
+   * @param {Array} ids
+   */
+
+  async checkSavedTracks(ids) {
+    return this.performRequest({
+      url: "/me/tracks/contains",
+      params: {
+        ids: [ids].filter(Boolean).join(",")
+      }
+    });
+  }
+
+  /**
+   * Get User's Saved Albums
+   * Get a list of the albums saved in the current Spotify user’s ‘Your Music’ library.
+   *
+   * @param {Integer} limit
+   * @param {Integer} offset
+   * @param {String} market
+   */
+
+  async getSavedAlbums(limit = 20, offset = 0, market) {
+    return this.performRequest({
+      url: "/me/albums",
+      params: {
+        limit,
+        offset,
+        market
+      }
+    });
+  }
+
+  /**
+   * Get User's Saved Tracks
+   * Get a list of the songs saved in the current Spotify user’s ‘Your Music’ library.
+   *
+   * @param {Integer} limit
+   * @param {Integer} offset
+   * @param {String} market
+   */
+
+  async getSavedTracks(limit, offset, market) {
+    return this.performRequest({
+      url: "/me/tracks",
+      params: {
+        limit,
+        offset,
+        market
+      }
+    });
+  }
+
+  /**
+   *
+   * Personalization API
+   *
+   */
+
+  /**
+   * Get a User's Top Artists and Tracks
+   * Get the current user’s top artists or tracks based on calculated affinity.
+   *
+   * @param {String} type
+   * @param {Integer} limit
+   * @param {Integer} offset
+   * @param {String} time_range
+   */
+
+  async getTopArtistsTracks(
+    type,
+    limit = 20,
+    offset = 0,
+    time_range = "medium_term"
+  ) {
+    return this.performRequest({
+      url: `/me/top/${type}`,
+      params: {
+        limit,
+        offset,
+        time_range
+      }
+    });
+  }
+
+  /**
+   *
+   * Playlists API
+   *
+   */
+
+  /**
+   * Get a Playlist
+   * Get a playlist owned by a Spotify user.
+   *
+   * @param {String} playlist_id
+   * @param {Array} fields
+   * @param {String} market
+   */
+
+  async getPlaylist(playlist_id, fields, market) {
+    return this.performRequest({
+      url: `/playlists/${playlist_id}`,
+      params: {
+        fields: [fields].filter(Boolean).join(","),
+        market
+      }
+    });
+  }
+
+  /**
+   * Get a Playlist's Tracks
+   * Get full details of the tracks of a playlist owned by a Spotify user.
+   *
+   * @param {String} playlist_id
+   * @param {Array} fields
+   * @param {Integer} limit
+   * @param {Integer} offset
+   * @param {Strings} market
+   */
+
+  async getPlaylistTracks(playlist_id, fields, limit = 20, offset = 0, market) {
+    return this.performRequest({
+      url: `/playlists/${playlist_id}/tracks`,
+      params: {
+        fields: [fields].filter(Boolean).join(","),
+        limit,
+        offset,
+        market
+      }
+    });
+  }
+
+  /**
+   * Get a Playlist Cover Image
+   * Get the current image associated with a specific playlist.
+   *
+   * @param {String} playlist_id
+   */
+
+  async getPlaylistCover(playlist_id) {
+    return this.performRequest({
+      url: `/playlists/${playlist_id}/images`
+    });
+  }
+
+  /**
+   * Remove Tracks from a Playlist
+   * Remove one or more tracks from a user’s playlist.
+   *
+   * @param {String} playlist_id
+   * @param {Array} tracks
+   * @param {String} snapshot_id
+   */
+
+  async playlistRemoveTrack(playlist_id, tracks, snapshot_id) {
+    return this.performRequest({
+      url: `/playlists/${playlist_id}/tracks`,
+      method: "DELETE",
+      data: {
+        tracks,
+        snapshot_id
+      }
+    });
+  }
+
+  /**
+   * Get a List of Current User's Playlists
+   * Get a list of the playlists owned or followed by the current Spotify user.
+   *
+   * @param {Integer} limit
+   * @param {Integer} offset
+   */
+
+  async getPlaylists(limit = 20, offset = 0) {
+    return this.performRequest({
+      url: "/me/playlists",
+      params: {
+        limit,
+        offset
+      }
+    });
+  }
+
+  /**
+   * Change a Playlist's Details
+   * Change a playlist’s name and public/private state. (The user must, of course, own the playlist.)
+   *
+   * @param {String} playlist_id
+   * @param {Boolean} _public
+   * @param {Boolean} collaborative
+   * @param {String} description
+   */
+
+  async playlistChangeDetails(
+    playlist_id,
+    _public,
+    collaborative,
+    description
+  ) {
+    return this.performRequest({
+      url: `/playlists/${playlist_id}`,
+      method: "PUT",
+      data: {
+        name,
+        _public,
+        collaborative,
+        description
+      }
+    });
+  }
+
+  /**
+   * Replace a Playlist's Tracks
+   * Replace all the tracks in a playlist, overwriting its existing tracks. This powerful request can be useful for
+   * replacing tracks, re-ordering existing tracks, or clearing the playlist.
+   *
+   * @param {String} playlist_id
+   * @param {Array} uris
+   */
+
+  async playlistReplaceTracks(playlist_id, uris) {
+    return this.performRequest({
+      url: `/playlists/${playlist_id}/tracks`,
+      method: "PUT",
+      params: {
+        uirs: [uris].filter(Boolean).join(",")
+      },
+      data: {
+        uris
+      }
+    });
+  }
+
+  /**
+   * Add Tracks to a Playlist
+   * Add one or more tracks to a user’s playlist.
+   *
+   * @param {String} playlist_id
+   * @param {Array} uri
+   * @param {Integer} position
+   */
+
+  async playlistAddTracks(playlist_id, uris, position) {
+    return this.performRequest({
+      url: `/playlists/${playlist_id}/tracks`,
+      method: "POST",
+      params: {
+        uris: [uris].filter(Boolean).join(","),
+        position
+      },
+      data: {
+        uris,
+        position
+      }
+    });
+  }
+
+  /**
+   * Create a Playlist
+   * Create a playlist for a Spotify user. (The playlist will be empty until you add tracks.)
+   *
+   * @param {String} user_id
+   * @param {String} name
+   * @param {Boolean} _public
+   * @param {Boolean} collaborative
+   * @param {String} description
+   */
+
+  async createPlaylist(user_id, name, _public, collaborative, description) {
+    return this.performRequest({
+      url: `/users/${user_id}/playlists`,
+      method: "POST",
+      data: {
+        name,
+        _public,
+        collaborative,
+        description
+      }
+    });
+  }
+
+  /**
+   * Get a List of a User's Playlists
+   * Get a list of the playlists owned or followed by a Spotify user.
+   *
+   * @param {String} user_id
+   * @param {Integer} limit
+   * @param {Integer} offset
+   */
+
+  async getUsersPlaylists(user_id, limit = 20, offset = 0) {
+    return this.performRequest({
+      url: `/users/${user_id}/playlists`,
+      params: {
+        limit,
+        offset
+      }
+    });
+  }
+
+  /**
+   * Reorder a Playlist's Tracks
+   * Reorder a track or a group of tracks in a playlist.
+   *
+   * @param {Integer} range_start
+   * @param {Integer} insert_before
+   * @param {Integer} range_length
+   * @param {String} snapshot_id
+   */
+
+  async playlistReorderTracks(
+    range_start,
+    insert_before,
+    range_length,
+    snapshot_id
+  ) {
+    this.performRequest({
+      url: `/playlists/${playlist_id}/tracks`,
+      method: "PUT",
+      data: {
+        range_start,
+        insert_before,
+        range_length,
+        snapshot_id
+      }
+    });
+  }
+
+  /**
+   *
    * Search API
    *
    */
